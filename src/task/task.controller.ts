@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { TaskService } from './task.service';
 import TaskDto from './task.dto';
+import { ServiceGuard } from 'src/service.guard';
 
 @Controller({ path: 'tasks' })
 export class TaskController {
@@ -12,6 +13,7 @@ export class TaskController {
   }
 
   @Post('')
+  @UseGuards(ServiceGuard)
   async createComment(
     @Param('taskId') taskId: string,
     @Body() taskDto: TaskDto,
