@@ -3,7 +3,7 @@ import { TaskService } from './task.service';
 import TaskDto from './task.dto';
 import { ServiceGuard } from 'src/service.guard';
 
-@Controller({ path: 'tasks' })
+@Controller({ path: 'api/v1/tasks' })
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
