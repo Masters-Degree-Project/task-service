@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  task-service:
+    container_name: ${SERVICE_ID}
+    build: .
+    ports:
+      - "${SERVICE_PORT:-3000}:${SERVICE_PORT:-3000}"
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - NODE_ENV=production
+      - SERVICE_PORT=${SERVICE_PORT:-3000}
+    depends_on:
+      - task-service-mongodb
+    networks:
+      - traefik-network
+  
+  task-service-mongodb:
+    container_name: ${SERVICE_ID}-db
+    image: mongo:latest
+    ports:
+      - "${DB_PORT}:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - traefik-network
+
+networks:
+  traefik-network:
+    name: traefik-network
+
+volumes:
+  mongodb_data: 
